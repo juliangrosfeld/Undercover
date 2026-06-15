@@ -282,9 +282,9 @@ section { padding: 6rem 0; }
   inset: 0;
   background: linear-gradient(
     to top,
-    rgba(13,59,110,0.90) 0%,
-    rgba(13,59,110,0.48) 50%,
-    rgba(13,59,110,0.18) 100%
+    rgba(13,59,110,0.62) 0%,
+    rgba(13,59,110,0.22) 45%,
+    rgba(13,59,110,0.04) 100%
   );
 }
 
@@ -372,18 +372,6 @@ section { padding: 6rem 0; }
   aspect-ratio: 4/5;
 }
 
-.why-img-accent {
-  position: absolute;
-  bottom: -2rem;
-  right: -2rem;
-  width: 55%;
-  border-radius: var(--radius);
-  border: 4px solid var(--white);
-  box-shadow: var(--shadow-lg);
-  aspect-ratio: 4/3;
-  object-fit: cover;
-}
-
 .why-content h2 { margin-bottom: 1.25rem; }
 .why-content > p { margin-bottom: 2.5rem; font-size: 1.05rem; }
 
@@ -469,6 +457,32 @@ section { padding: 6rem 0; }
 }
 
 /* ============================================
+   BEFORE & AFTER (dedicated section)
+   ============================================ */
+.beforeafter { background: var(--white); }
+
+.beforeafter-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.beforeafter-item {
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.beforeafter-item img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  display: block;
+}
+
+/* ============================================
    PRODUCTS
    ============================================ */
 .products { background: var(--off-white); }
@@ -483,7 +497,7 @@ section { padding: 6rem 0; }
 
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 1.5rem;
 }
 
@@ -622,8 +636,10 @@ section { padding: 6rem 0; }
 
 .install-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
+  max-width: 720px;
+  margin: 0 auto;
 }
 
 .install-card {
@@ -1076,7 +1092,6 @@ section { padding: 6rem 0; }
    ============================================ */
 @media (max-width: 1024px) {
   .why-grid { gap: 3rem; }
-  .why-img-accent { right: -1rem; bottom: -1rem; }
   .products-grid { grid-template-columns: repeat(2, 1fr); }
   .install-grid { grid-template-columns: repeat(2, 1fr); }
   .gallery-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1100,6 +1115,7 @@ section { padding: 6rem 0; }
 
   /* Before/After */
   .ba-grid { grid-template-columns: 1fr; max-width: 420px; }
+  .beforeafter-grid { grid-template-columns: 1fr; max-width: 480px; }
 
   /* Products */
   .products-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
