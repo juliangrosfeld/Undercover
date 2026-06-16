@@ -291,7 +291,7 @@ section { padding: 6rem 0; }
 .hero-content {
   position: relative;
   z-index: 1;
-  max-width: 720px;
+  max-width: 50%;
 }
 
 .hero-badge {
@@ -604,7 +604,7 @@ section { padding: 6rem 0; }
   box-shadow: var(--shadow);
 }
 .measure-hint img {
-  width: 180px;
+  width: 225px;
   flex-shrink: 0;
   border-radius: 8px;
 }
@@ -1108,6 +1108,7 @@ section { padding: 6rem 0; }
     background-image: url('images/gallery-3.png');
     background-position: center center;
   }
+  .hero-content { max-width: 100%; }
 
   /* Why */
   .why-grid { grid-template-columns: 1fr; }
