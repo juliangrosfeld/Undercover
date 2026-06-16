@@ -158,10 +158,15 @@ section { padding: 6rem 0; }
 }
 
 .nav-logo img {
-  height: 60px;
+  height: 80px;
   width: auto;
-  transition: opacity var(--transition);
+  filter: brightness(0) invert(1);
+  transition: opacity var(--transition), filter var(--transition);
   background: transparent;
+}
+
+.nav.scrolled .nav-logo img {
+  filter: none;
 }
 
 .nav-links {
@@ -214,6 +219,7 @@ section { padding: 6rem 0; }
 
 /* Mobile nav */
 @media (max-width: 768px) {
+  .nav-logo img { height: 56px; }
   .nav-links {
     display: none;
     position: absolute;
@@ -261,7 +267,7 @@ section { padding: 6rem 0; }
   min-height: 100svh;
   min-height: 100vh;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   padding-bottom: 7rem;
   overflow: hidden;
 }
@@ -1110,8 +1116,11 @@ section { padding: 6rem 0; }
   }
 
   /* Why */
-  .why-grid { grid-template-columns: 1fr; }
-  .why-image-block { display: none; }
+  .why-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .why-image-block { display: block; }
+  .why-img-main { aspect-ratio: 4/3; }
+  .why-content > p { font-size: 1rem; }
+  .benefit p { font-size: 0.95rem; }
 
   /* Before/After */
   .ba-grid { grid-template-columns: 1fr; max-width: 420px; }
@@ -1119,6 +1128,13 @@ section { padding: 6rem 0; }
 
   /* Products */
   .products-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
+  .product-dim-row { font-size: 0.95rem; }
+  .product-btu { font-size: 0.9rem; }
+
+  /* Installation readability */
+  .install-card-body > p { font-size: 0.95rem; }
+  .install-component { font-size: 0.95rem; }
+  .install-footer-text p { font-size: 0.95rem; }
 
   /* Installation */
   .install-grid { grid-template-columns: 1fr; }
@@ -1137,7 +1153,14 @@ section { padding: 6rem 0; }
 
   /* Measure hint */
   .measure-hint { flex-direction: column; gap: 1.25rem; }
-  .measure-hint img { width: 100%; max-width: 280px; margin: 0 auto; }
+  .measure-hint img { width: 100%; max-width: 320px; margin: 0 auto; }
+  .measure-hint-text p { font-size: 0.95rem; }
+
+  /* FAQ readability */
+  .faq-answer p { font-size: 0.95rem; }
+
+  /* Contact readability */
+  .contact-method-info strong { font-size: 0.95rem; }
 
   /* Footer */
   .footer-top { flex-direction: column; gap: 2rem; }
@@ -1156,16 +1179,16 @@ section { padding: 6rem 0; }
    RESPONSIVE — 480px (small phones)
    ============================================ */
 @media (max-width: 480px) {
-  .container { padding: 0 1.1rem; }
+  .container { padding: 0 1.5rem; }
 
-  /* Hero */
-  .hero { padding-bottom: 5rem; align-items: flex-end; }
-  .hero-content { padding-bottom: 0.5rem; }
-  .hero h1 { font-size: clamp(1.8rem, 8vw, 2.4rem); }
+  /* Hero — sit in upper-center area, not bottom */
+  .hero { padding-top: 5.5rem; padding-bottom: 6rem; align-items: center; }
+  .hero-content { padding-bottom: 0; }
+  .hero h1 { font-size: clamp(1.9rem, 8.5vw, 2.4rem); }
   .hero-sub { font-size: 1rem; margin-bottom: 2rem; }
   .hero-actions { flex-direction: column; align-items: stretch; }
   .hero-actions .btn { width: 100%; justify-content: center; }
-  .hero-badge { font-size: 0.7rem; }
+  .hero-badge { font-size: 0.75rem; }
 
   /* Products full-width */
   .products-grid { max-width: 100%; }
@@ -1175,7 +1198,7 @@ section { padding: 6rem 0; }
   .gallery-item img { aspect-ratio: 1/1; }
 
   /* FAQ */
-  .faq-question { font-size: 0.88rem; padding: 1rem; }
+  .faq-question { font-size: 0.95rem; padding: 1rem; }
 
   /* Footer bottom stack */
   .footer-bottom { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
