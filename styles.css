@@ -483,8 +483,7 @@ section { padding: 6rem 0; }
 
 .beforeafter-item img {
   width: 100%;
-  aspect-ratio: 4/3;
-  object-fit: cover;
+  height: auto;
   display: block;
 }
 
