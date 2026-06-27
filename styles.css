@@ -476,6 +476,7 @@ section { padding: 6rem 0; }
 }
 
 .beforeafter-item {
+  display: flex;
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: var(--shadow);
@@ -483,7 +484,9 @@ section { padding: 6rem 0; }
 
 .beforeafter-item img {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
   display: block;
 }
 
