@@ -107,9 +107,24 @@
     <video class="hero-video" id="heroVideo"
            autoplay loop muted playsinline preload="auto"
            poster="images/gallery-5.jpg"
-           aria-hidden="true" tabindex="-1">
-      <source src="images/Desktop-Undercover-video.mp4" type="video/mp4" />
-    </video>
+           aria-hidden="true" tabindex="-1"
+           data-src-desktop="images/desktop-undercovers.mp4"
+           data-src-mobile="images/Desktop-Undercover-video.mp4"></video>
+    <script>
+      /* Pick the hero source at parse time, before the browser starts
+         fetching, so a phone never downloads the desktop cut (and vice
+         versa). Inline and synchronous on purpose - deferring this to
+         script.js would delay the first frame. */
+      (function () {
+        var v = document.getElementById('heroVideo');
+        if (!v) return;
+        var small = window.matchMedia('(max-width: 768px)').matches;
+        v.src = small ? v.getAttribute('data-src-mobile')
+                      : v.getAttribute('data-src-desktop');
+        var p = v.play();
+        if (p && typeof p.catch === 'function') p.catch(function () {});
+      })();
+    </script>
     <div class="hero-overlay"></div>
 
     <div class="container">
@@ -436,6 +451,12 @@
         </div>
         <div class="gallery-item" data-src="images/gallery-7.jpg">
           <img src="images/gallery-7.jpg" alt="Finished AC cover installation on the exterior wall of a Curacao home" loading="lazy" />
+        </div>
+        <div class="gallery-item" data-src="images/gallery-new-6.png">
+          <img src="images/gallery-new-6.png" alt="Aluminum airco cover on a coastal terrace beside a lime green wall, overlooking a bay in Curacao" loading="lazy" />
+        </div>
+        <div class="gallery-item" data-src="images/gallery-new-7.png">
+          <img src="images/gallery-new-7.png" alt="Wall-mounted UnderCovers aluminum AC cover fitted under the eaves of a stone-clad Curacao home" loading="lazy" />
         </div>
       </div>
     </div>
