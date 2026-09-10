@@ -104,9 +104,13 @@
        HERO
        ============================================ -->
   <section class="hero" id="hero">
+    <!-- muted / playsinline / autoplay are raw HTML attributes: iOS Safari
+         requires all three to be present in the markup before the media
+         loads, or it will refuse to autoplay. No poster: if playback is
+         ever blocked the element holds its own first frame rather than
+         swapping in a separate still image. -->
     <video class="hero-video" id="heroVideo"
-           autoplay loop muted playsinline preload="auto"
-           poster="images/gallery-5.jpg"
+           autoplay loop muted playsinline webkit-playsinline preload="auto"
            aria-hidden="true" tabindex="-1"
            data-src-desktop="images/desktop-undercovers.mp4"
            data-src-mobile="images/Desktop-Undercover-video.mp4"></video>
@@ -114,15 +118,30 @@
       /* Pick the hero source at parse time, before the browser starts
          fetching, so a phone never downloads the desktop cut (and vice
          versa). Inline and synchronous on purpose - deferring this to
-         script.js would delay the first frame. */
+         script.js would delay the first frame.
+
+         muted is re-asserted as a property because a few WebKit builds
+         drop the attribute's effect when src is assigned from script,
+         and an unmuted video is refused autoplay outright. */
       (function () {
         var v = document.getElementById('heroVideo');
         if (!v) return;
+        v.muted = true;
+        v.defaultMuted = true;
+        v.playsInline = true;
         var small = window.matchMedia('(max-width: 768px)').matches;
         v.src = small ? v.getAttribute('data-src-mobile')
                       : v.getAttribute('data-src-desktop');
-        var p = v.play();
-        if (p && typeof p.catch === 'function') p.catch(function () {});
+        var tryPlay = function () {
+          var p = v.play();
+          if (p && typeof p.catch === 'function') p.catch(function () {});
+        };
+        tryPlay();
+        /* iOS often is not ready to play at this point; retry once metadata
+           lands, which is the earliest moment a frame can be shown. */
+        v.addEventListener('loadedmetadata', tryPlay);
+        v.addEventListener('loadeddata', tryPlay);
+        v.addEventListener('canplay', tryPlay);
       })();
     </script>
     <div class="hero-overlay"></div>
@@ -457,6 +476,9 @@
         </div>
         <div class="gallery-item" data-src="images/gallery-new-7.png">
           <img src="images/gallery-new-7.png" alt="Wall-mounted UnderCovers aluminum AC cover fitted under the eaves of a stone-clad Curacao home" loading="lazy" />
+        </div>
+        <div class="gallery-item" data-src="images/gallery-new-5.jpg">
+          <img src="images/gallery-new-5.jpg" alt="Aluminum AC cover mounted on a Curacao home beside a gravel garden with cacti and bougainvillea" loading="lazy" />
         </div>
       </div>
     </div>

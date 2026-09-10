@@ -29,17 +29,37 @@ if (heroVideo) {
   });
 
   // Mobile browsers only honour autoplay when muted + playsinline, and some
-  // still refuse until the element is explicitly played. Retry quietly; the
-  // poster stays visible if playback is blocked outright.
+  // still refuse until the element is explicitly played. Retry quietly at
+  // each point the element becomes more ready. There is deliberately no
+  // play button: if iOS blocks autoplay (Low Power Mode, some cellular
+  // cases) the element simply holds its own first frame.
   const playHero = () => {
+    heroVideo.muted = true;               // an unmuted video is refused outright
     const p = heroVideo.play();
     if (p && typeof p.catch === 'function') p.catch(() => {});
   };
   playHero();
-  heroVideo.addEventListener('loadeddata', playHero);
+  ['loadedmetadata', 'loadeddata', 'canplay', 'canplaythrough'].forEach(ev =>
+    heroVideo.addEventListener(ev, playHero)
+  );
   document.addEventListener('visibilitychange', () => {
     if (!document.hidden) playHero();
   });
+
+  // Last resort, entirely invisible: if playback was blocked, the first
+  // gesture anywhere on the page starts it. No UI, nothing to tap on the
+  // video itself.
+  const kick = () => {
+    if (heroVideo.paused) playHero();
+    if (!heroVideo.paused) {
+      ['touchstart', 'pointerdown', 'scroll'].forEach(ev =>
+        window.removeEventListener(ev, kick)
+      );
+    }
+  };
+  ['touchstart', 'pointerdown', 'scroll'].forEach(ev =>
+    window.addEventListener(ev, kick, { passive: true })
+  );
 }
 
 /* --- Scroll fade-in animations --- */
