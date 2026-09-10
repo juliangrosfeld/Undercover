@@ -491,6 +491,113 @@ section { padding: 6rem 0; }
 }
 
 /* ============================================
+   B2B & PROJECTEN
+   ============================================ */
+.b2b {
+  background: linear-gradient(160deg, #0f4480 0%, var(--navy) 45%, #092948 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Soft teal glow to separate it from the flat navy install section */
+.b2b::before {
+  content: '';
+  position: absolute;
+  top: -18%;
+  right: -8%;
+  width: 620px;
+  height: 620px;
+  background: radial-gradient(circle, rgba(29,158,117,0.20) 0%, rgba(29,158,117,0) 68%);
+  pointer-events: none;
+}
+
+.b2b .container { position: relative; z-index: 1; }
+
+.b2b-card {
+  max-width: 960px;
+  margin: 0 auto;
+  background: rgba(255,255,255,0.055);
+  border: 1px solid rgba(255,255,255,0.16);
+  border-radius: var(--radius);
+  padding: 3.25rem 3rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 18px 56px rgba(0,0,0,0.22);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+/* Premium top accent bar */
+.b2b-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--teal) 0%, var(--teal-light) 55%, rgba(37,184,135,0.15) 100%);
+}
+
+.b2b-header { text-align: center; max-width: 660px; margin: 0 auto; }
+.b2b-header .section-label { color: #45d3a5; } /* lifted vs --teal-light: clears AA 4.5:1 on the card surface */
+.b2b-header h2 { color: var(--white); margin-bottom: 1rem; }
+
+.b2b-sub {
+  color: rgba(255,255,255,0.78);
+  font-size: 1.05rem;
+}
+
+.b2b-body {
+  margin-top: 2.75rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid rgba(255,255,255,0.12);
+}
+
+.b2b-list-intro {
+  color: var(--white);
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.b2b-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem 2.5rem;
+}
+
+.b2b-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  color: rgba(255,255,255,0.9);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.b2b-check {
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+.b2b-footer {
+  margin-top: 2.75rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid rgba(255,255,255,0.12);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.b2b-closing {
+  color: rgba(255,255,255,0.75);
+  font-size: 0.95rem;
+  margin: 0;
+  max-width: 560px;
+}
+
+.b2b-cta { flex-shrink: 0; }
+
+/* ============================================
    PRODUCTS
    ============================================ */
 .products { background: var(--off-white); }
@@ -1146,6 +1253,21 @@ section { padding: 6rem 0; }
   /* Gallery: always 2 columns on mobile */
   .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
 
+  /* B2B */
+  .b2b-card { padding: 2.25rem 1.5rem; }
+  .b2b-sub { font-size: 1rem; }
+  .b2b-body { margin-top: 2rem; padding-top: 1.75rem; }
+  .b2b-list { grid-template-columns: 1fr; gap: 0.9rem; }
+  .b2b-list li { font-size: 0.95rem; }
+  .b2b-footer {
+    margin-top: 2rem;
+    padding-top: 1.75rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .b2b-closing { font-size: 0.95rem; }
+  .b2b-cta { width: 100%; }
+
   /* FAQ */
   .faq-grid { grid-template-columns: 1fr; }
 
@@ -1198,6 +1320,15 @@ section { padding: 6rem 0; }
   /* Gallery stays 2-col even on small phones */
   .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
   .gallery-item img { aspect-ratio: 1/1; }
+
+  /* B2B: long CTA label needs room on small phones */
+  .b2b-cta {
+    white-space: normal;
+    padding-left: 1.1rem;
+    padding-right: 1.1rem;
+    font-size: 0.9rem;
+    line-height: 1.35;
+  }
 
   /* FAQ */
   .faq-question { font-size: 0.95rem; padding: 1rem; }
