@@ -281,8 +281,8 @@ section { padding: 6rem 0; }
   height: 100%;
   object-fit: cover;
   object-position: center 30%;
-  /* poster shows here until the video is decodable */
-  background: #0d3b6e url('images/gallery-5.jpg') center 30% / cover no-repeat;
+  /* solid fill only - no still image stands in for the video */
+  background-color: #0f1013;
   transform: scale(1.04);
   transition: transform 8s ease-out;
   pointer-events: none;
@@ -298,19 +298,20 @@ section { padding: 6rem 0; }
   inset: 0;
   /* purely decorative: must never intercept clicks on the hero CTA */
   pointer-events: none;
-  /* Centred copy sits over the brightest part of the frame, so the vignette
-     carries most of the work; the navy linear gradient is the same treatment
-     the still image used, just weighted heavier through the middle. */
+  /* Neutral charcoal, not navy - the old blue tint fought the footage.
+     Density is concentrated behind the centred copy; the frame edges stay
+     much clearer than before. The footage has near-white frames, so the
+     centre cannot go lighter than this without failing AA on the teal line. */
   background:
-    radial-gradient(ellipse 92% 78% at 50% 50%,
-      rgba(6,26,50,0.66) 0%,
-      rgba(6,26,50,0.46) 55%,
-      rgba(6,26,50,0.16) 100%),
+    radial-gradient(ellipse 95% 80% at 50% 46%,
+      rgba(14,15,17,0.34) 0%,
+      rgba(14,15,17,0.22) 58%,
+      rgba(14,15,17,0.04) 100%),
     linear-gradient(
-      to top,
-      rgba(13,59,110,0.72) 0%,
-      rgba(13,59,110,0.50) 45%,
-      rgba(13,59,110,0.36) 100%
+      to bottom,
+      rgba(14,15,17,0.18) 0%,
+      rgba(14,15,17,0.08) 40%,
+      rgba(14,15,17,0.26) 100%
     );
 }
 
@@ -320,6 +321,43 @@ section { padding: 6rem 0; }
   max-width: 720px;
   margin: 0 auto;
   text-align: center;
+  --scrim: 0.58;
+}
+
+/* Soft pool of shade carrying the copy. Keeping the density local means the
+   rest of the frame - and the video - stays far lighter than a global
+   overlay strong enough to do the same job. */
+.hero-content::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  transform: translate(-50%, -50%);
+  /* Deliberately larger than the viewport so the falloff never shows an
+     edge against flat surfaces in the footage. */
+  width: 250%;
+  height: 340%;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center,
+    rgba(10,12,14,var(--scrim)) 0%,
+    rgba(10,12,14,calc(var(--scrim) * 0.92)) 24%,
+    rgba(10,12,14,calc(var(--scrim) * 0.72)) 44%,
+    rgba(10,12,14,calc(var(--scrim) * 0.44)) 64%,
+    rgba(10,12,14,calc(var(--scrim) * 0.18)) 82%,
+    rgba(10,12,14,0) 100%);
+}
+
+/* Video frames run near-white in places. A tight shadow gives the copy its
+   own local contrast so the overlay above can stay light and neutral. */
+.hero-eyebrow,
+.hero h1,
+.hero-sub {
+  text-shadow:
+    0 0 10px rgba(6,8,10,0.88),
+    0 2px 5px rgba(6,8,10,0.80),
+    0 3px 22px rgba(6,8,10,0.70),
+    0 6px 44px rgba(6,8,10,0.45);
 }
 
 .hero-eyebrow {
@@ -1234,16 +1272,18 @@ section { padding: 6rem 0; }
   section { padding: 3.5rem 0; }
 
   /* Hero video: fill the taller mobile frame from its centre */
-  .hero-video { object-position: center center; background-position: center center; }
+  .hero-video { object-position: center center; }
 
-  /* The mobile crop lands on a brighter part of the frame, so lift the
-     overlay slightly to keep the teal headline above 3:1. */
+  /* The mobile crop lands on brighter frames, so lift the overlay to keep
+     the teal headline above 3:1 and the small copy above 4.5:1. */
   .hero-overlay::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: rgba(6,26,50,0.14);
+    background: rgba(14,15,17,0.10);
   }
+
+  .hero-content { --scrim: 0.60; }
 
   /* Why */
   .why-grid { grid-template-columns: 1fr; gap: 2rem; }
