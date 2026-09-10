@@ -21,11 +21,26 @@ navLinks.querySelectorAll('a').forEach(link => {
   link.addEventListener('click', () => navLinks.classList.remove('open'));
 });
 
-/* --- Hero background subtle zoom on load --- */
-const heroBg = document.getElementById('heroBg');
-window.addEventListener('load', () => {
-  setTimeout(() => heroBg.classList.add('loaded'), 50);
-});
+/* --- Hero background video: subtle zoom on load + autoplay resilience --- */
+const heroVideo = document.getElementById('heroVideo');
+if (heroVideo) {
+  window.addEventListener('load', () => {
+    setTimeout(() => heroVideo.classList.add('loaded'), 50);
+  });
+
+  // Mobile browsers only honour autoplay when muted + playsinline, and some
+  // still refuse until the element is explicitly played. Retry quietly; the
+  // poster stays visible if playback is blocked outright.
+  const playHero = () => {
+    const p = heroVideo.play();
+    if (p && typeof p.catch === 'function') p.catch(() => {});
+  };
+  playHero();
+  heroVideo.addEventListener('loadeddata', playHero);
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) playHero();
+  });
+}
 
 /* --- Scroll fade-in animations --- */
 const fadeEls = document.querySelectorAll('.fade-in');
